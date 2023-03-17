@@ -10,6 +10,21 @@ YAY_GIT_URL="https://aur.archlinux.org/yay-bin.git"
 XPAD_GIT_URL="https://github.com/paroj/xpad.git"
 WIN_INTL_KEYBOARD_GIT_URL="https://github.com/fpetros1/win_us_intl"
 CATPPUCCIN_SDDM_THEME_GIT_URL="https://github.com/catppuccin/sddm"
+NVIM_GIT_URL="https://github.com/fpetros1/nvim-config"
+PACKER_GIT_URL="https://github.com/wbthomason/packer.nvim"
+
+# Check if monitor file exists, give the user a chance to stop if not
+MONITORS_FILE="$SCRIPT_WD/monitors.conf" 
+if [ ! -f "$MONITORS_FILE" ]; then
+    echo "WARNING: '$MONITORS_FILE' does not exist, defaulting to auto monitor config in hyprland. CTRL + C to Cancel"
+	TIMER=5
+	while [ "$TIMER" -gt 0 ]; do
+		echo "$TIMER"
+		sleep 1
+		TIMER=$(echo $[TIMER-1])
+	done
+	cp "$SCRIPT_WD/monitors.auto.conf" "$SCRIPT_WD/monitors.conf" 
+fi
 
 # Create Staging Folder
 mkdir -p $STAGING_FOLDER && cd $STAGING_FOLDER
@@ -28,6 +43,10 @@ YAY_BUILD_FOLDER="yay-bin"
 rm -rf $STAGING_FOLDER/$YAY_BUILD_FOLDER
 git clone "$YAY_GIT_URL" && cd $YAY_BUILD_FOLDER
 yes | LC_ALL=en_US.UTF-8 makepkg -si && cd $STAGING_FOLDER
+
+# Uninstall xdg-desktop-portal implementations that cause problems with hyprland's 
+yes | LC_ALL=en_US.UTF-8 paru -R xdg-desktop-portal-wlr xdg-desktop-portal-gnome
+yes | LC_ALL=en_US.UTF-8 paru -Rnsdd xdg-desktop-portal-kde
 
 # Install my Hyprland core packages
 CORE_PACKAGES=$(echo "$(cat $SCRIPT_WD/$PACKAGES_FILE | xargs)")
@@ -56,6 +75,11 @@ cp -r $HYPRLAND_CONFIG/home/* $HOME && rm -r $HYPRLAND_CONFIG/home
 # Delete installation Folder
 rm -r $HYPRLAND_CONFIG/installation
 
+# Delete Git Files
+rm $HYPRLAND_CONFIG/.gitignore
+rm $HYPRLAND_CONFIG/README.md
+rm $HYPRLAND_CONFIG/LICENSE.md
+
 # Try to disable other login managers and enable sddm
 sudo systemctl disable ly
 sudo systemctl disable gdm
@@ -74,9 +98,17 @@ sudo echo "[Theme]" >> $SDDM_CONFIG
 sudo echo "Current=catppuccin-$FLAVOUR" >> $SDDM_CONFIG
 cd $STAGING_FOLDER
 
+# Download and setup My NeoVim + Packer
+NVIM_FOLDER="nvim-config"
+git clone --depth 1 "$PACKER_GIT_URL" $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
+git clone "$NVIM_GIT_URL" && cd "$NVIM_FOLDER"
+cp -r . $HOME/.config/nvim
+cd $STAGING_FOLDER
+
 # Source .environment in .zshrc and .bashrc
 echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.zshrc
 echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.bashrc
 
+cd "$(pwd)"
 echo "\nDone."
 

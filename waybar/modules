@@ -154,7 +154,7 @@
 	  "format": "{}",
 	  "format-alt": "{alt}",
       "format-alt-click": "click-right",
-	  "interval": 120,
+	  "interval": 300,
 	  "tooltip": true,
       "tooltip-format": "{format-alt}",
 	  "return-type": "json",
@@ -166,7 +166,7 @@
     "exec": "checkupdates | wc -l",
     "exec-if": "[[ $(checkupdates | wc -l) ]]",
     "interval": 600,
-    "on-click": "alacritty --class update -e paru -Syu && notify-send 'The system has been updated' "
+    "on-click": "~/.config/hypr/scripts/arch-updater.sh"
   },
 
   "custom/cycle_wall":{

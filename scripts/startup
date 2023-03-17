@@ -39,5 +39,5 @@ kdeconnect-indicator &
 playerctld daemon &
 
 # XWaylandPrimary
-${SCRIPTSDIR}/xwayland-primary &
+${SCRIPTSDIR}/xwayland-config &
 

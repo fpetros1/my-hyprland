@@ -1,9 +1,0 @@
-# Delay for XWayland to Start
-sleep 5
-
-# Allow xhost for all local users
-xhost + local:
-
-# Set XWayland Primary Monitor
-xrandr --output "$(xrandr | awk '/2560x1440/ {print $1}' | head -n 1)" --primary
-
