@@ -10,6 +10,7 @@ YAY_GIT_URL="https://aur.archlinux.org/yay-bin.git"
 XPAD_GIT_URL="https://github.com/paroj/xpad.git"
 WIN_INTL_KEYBOARD_GIT_URL="https://github.com/fpetros1/win_us_intl"
 CATPPUCCIN_SDDM_THEME_GIT_URL="https://github.com/catppuccin/sddm"
+CATPPUCCIN_QT5CT_GIT_URL="https://github.com/catppuccin/qt5ct"
 NVIM_GIT_URL="https://github.com/fpetros1/nvim-config"
 PACKER_GIT_URL="https://github.com/wbthomason/packer.nvim"
 
@@ -104,6 +105,14 @@ git clone --depth 1 "$PACKER_GIT_URL" $HOME/.local/share/nvim/site/pack/packer/s
 git clone "$NVIM_GIT_URL" && cd "$NVIM_FOLDER"
 cp -r . $HOME/.config/nvim
 cd $STAGING_FOLDER
+
+# Install Catppuccin qt5ct color scheme
+QT5CT_FOLDER="qt5ct"
+FLAVOUR="Mocha"
+COLORS_FOLDER="$HOME/.config/qt5ct/colors"
+mkdir -p "$COLORS_FOLDER"
+git clone "$CATPPUCCIN_QT5CT_GIT_URL" && cd $QT5CT_FOLDER
+cp "Catppuccin-${FLAVOUR}.conf" "$COLORS_FOLDER" 
 
 # Source .environment in .zshrc and .bashrc
 echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.zshrc
