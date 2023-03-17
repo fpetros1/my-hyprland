@@ -113,6 +113,7 @@ COLORS_FOLDER="$HOME/.config/qt5ct/colors"
 mkdir -p "$COLORS_FOLDER"
 git clone "$CATPPUCCIN_QT5CT_GIT_URL" && cd $QT5CT_FOLDER
 cp "Catppuccin-${FLAVOUR}.conf" "$COLORS_FOLDER" 
+cd $STAGING_FOLDER
 
 # Source .environment in .zshrc and .bashrc
 echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.zshrc
