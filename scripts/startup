@@ -41,3 +41,6 @@ playerctld daemon &
 # XWaylandPrimary
 ${SCRIPTSDIR}/xwayland-config &
 
+# Replace Right Super with Home
+xmodmap -e 'keycode 134 = Home'
+
