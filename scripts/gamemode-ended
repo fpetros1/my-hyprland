@@ -1,0 +1,6 @@
+#!/bin/sh
+
+notify-send "GameMode Ended" &
+
+wtype -M win 0
+

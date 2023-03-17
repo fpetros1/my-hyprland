@@ -1,0 +1,27 @@
+#!/bin/bash
+
+## Set GTK Configuration
+
+THEME='Catppuccin-Mocha-Standard-Mauve-Dark'
+ICONS='Papirus-Dark'
+FONT='Ubuntu Nerd Font 12'
+CURSOR='Breeze_Snow'
+RECENT_FILES='false'
+
+INTERFACE_SCHEMA='gsettings set org.gnome.desktop.interface'
+PRIVACY_SCHEMA='gsettings set org.gnome.desktop.privacy'
+
+apply_themes() {
+	${INTERFACE_SCHEMA} gtk-theme "$THEME"
+	${INTERFACE_SCHEMA} icon-theme "$ICONS"
+	${INTERFACE_SCHEMA} cursor-theme "$CURSOR"
+	${INTERFACE_SCHEMA} font-name "$FONT"
+}
+
+apply_privacy() {
+	${PRIVACY_SCHEMA} remember-recent-files "$RECENT_FILES"	
+}
+
+apply_themes
+apply_privacy
+

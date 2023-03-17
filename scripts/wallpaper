@@ -1,0 +1,14 @@
+#!/bin/bash
+
+CONFIG="$HOME/.config/hypr/hyprpaper.conf"
+
+CONFIG_FILES="$CONFIG"
+
+trap "killall hyprpaper" EXIT
+
+while true; do
+	hyprpaper &
+	inotifywait -e create,modify $CONFIG_FILES
+	killall hyprpaper
+done
+
