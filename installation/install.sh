@@ -71,7 +71,7 @@ mkdir -p $HYPRLAND_CONFIG
 cp -r $SCRIPT_WD/* $HYPRLAND_CONFIG
 
 # Copy Files to Home
-cp -r $HYPRLAND_CONFIG/home/* $HOME && rm -r $HYPRLAND_CONFIG/home
+cp -r $HYPRLAND_CONFIG/home/. $HOME && rm -r $HYPRLAND_CONFIG/home
 
 # Delete installation Folder
 rm -r $HYPRLAND_CONFIG/installation

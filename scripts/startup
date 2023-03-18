@@ -13,7 +13,7 @@ done
 # Apply themes
 ${SCRIPTSDIR}/gtkconfig &
 
-# Lauch notification daemon (mako)
+# Lauch notification daemon (swaync)
 ${SCRIPTSDIR}/notifications &
 
 # Lauch statusbar (waybar)

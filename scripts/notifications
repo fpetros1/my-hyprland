@@ -1,14 +1,15 @@
 #!/bin/bash
 
-CONFIG="$HOME/.config/hypr/mako/config"
+CONFIG="$HOME/.config/hypr/swaync/config.json"
+STYLE="$HOME/.config/hypr/swaync/style.css"
 
-CONFIG_FILES="$CONFIG"
+CONFIG_FILES="$CONFIG $STYLE"
 
-trap "killall mako" EXIT
+trap "killall swaync" EXIT
 
 while true; do
-	mako --config ${CONFIG} &
+	swaync -c ${CONFIG} -s ${STYLE} &
 	inotifywait -e create,modify $CONFIG_FILES	
-	killall mako
+	killall swaync
 done
 
