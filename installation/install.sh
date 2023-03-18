@@ -115,9 +115,11 @@ git clone "$CATPPUCCIN_QT5CT_GIT_URL" && cd $QT5CT_FOLDER
 cp "Catppuccin-${FLAVOUR}.conf" "$COLORS_FOLDER" 
 cd $STAGING_FOLDER
 
-# Source .environment in .zshrc and .bashrc
-echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.zshrc
+# Source .environment and autosuggestions in .zshrc and .bashrc
+echo "#Environment\nsource $HOME/.environment" >> $HOME/.zshrc
+echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> $HOME/.zshrc
 echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.bashrc
+
 
 cd "$(pwd)"
 echo "\nDone."

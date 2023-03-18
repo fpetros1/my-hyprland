@@ -54,7 +54,7 @@ imv
 inotify-tools
 kdeconnect
 libreoffice-fresh
-mako
+mako-git
 mesa-utils
 mpv
 ncpamixer
@@ -89,5 +89,6 @@ wofi
 wtype
 youtube-music-bin
 zsh
+zsh-autosuggestions
 swaylock
 
