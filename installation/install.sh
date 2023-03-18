@@ -15,7 +15,7 @@ NVIM_GIT_URL="https://github.com/fpetros1/nvim-config"
 PACKER_GIT_URL="https://github.com/wbthomason/packer.nvim"
 
 # Check if monitor file exists, give the user a chance to stop if not
-MONITORS_FILE="$SCRIPT_WD/monitors.conf" 
+MONITORS_FILE="$SCRIPT_WD/../monitors.conf" 
 if [ ! -f "$MONITORS_FILE" ]; then
     echo "WARNING: '$MONITORS_FILE' does not exist, defaulting to auto monitor config in hyprland. CTRL + C to Cancel"
 	TIMER=5
@@ -24,34 +24,34 @@ if [ ! -f "$MONITORS_FILE" ]; then
 		sleep 1
 		TIMER=$(echo $[TIMER-1])
 	done
-	cp "$SCRIPT_WD/monitors.auto.conf" "$SCRIPT_WD/monitors.conf" 
+	cp "$SCRIPT_WD/../monitors.auto.conf" "$SCRIPT_WD/../monitors.conf" 
 fi
 
 # Create Staging Folder
 mkdir -p $STAGING_FOLDER && cd $STAGING_FOLDER
 
 # Install Git
-yes | LC_ALL=en_US.UTF-8 sudo pacman -S --needed git base-devel findutils
+sudo pacman -S --needed git base-devel findutils
 
 # Clone and install Paru/Yay
 # Paru
 PARU_BUILD_FOLDER="paru-bin"
 rm -rf $STAGING_FOLDER/$PARU_BUILD_FOLDER
 git clone "$PARU_GIT_URL" && cd $PARU_BUILD_FOLDER
-yes | LC_ALL=en_US.UTF-8 makepkg -si && cd $STAGING_FOLDER
+makepkg -si && cd $STAGING_FOLDER
 # Yay
 YAY_BUILD_FOLDER="yay-bin"
 rm -rf $STAGING_FOLDER/$YAY_BUILD_FOLDER
 git clone "$YAY_GIT_URL" && cd $YAY_BUILD_FOLDER
-yes | LC_ALL=en_US.UTF-8 makepkg -si && cd $STAGING_FOLDER
+makepkg -si && cd $STAGING_FOLDER
 
 # Uninstall xdg-desktop-portal implementations that cause problems with hyprland's 
-yes | LC_ALL=en_US.UTF-8 paru -R xdg-desktop-portal-wlr xdg-desktop-portal-gnome
-yes | LC_ALL=en_US.UTF-8 paru -Rnsdd xdg-desktop-portal-kde
+paru -R xdg-desktop-portal-wlr xdg-desktop-portal-gnome
+paru -Rnsdd xdg-desktop-portal-kde
 
 # Install my Hyprland core packages
 CORE_PACKAGES=$(echo "$(cat $SCRIPT_WD/$PACKAGES_FILE | xargs)")
-yes | LC_ALL=en_US.UTF-8 paru -Syu $CORE_PACKAGES
+paru -Syu $CORE_PACKAGES
 
 # Install Xpad with support for 8bitdo Ultimate Controller
 sudo git clone "$XPAD_GIT_URL" /usr/src/xpad-0.4
@@ -68,7 +68,7 @@ cp .XCompose $HOME && cd $STAGING_FOLDER
 # Copy Hyprland Files
 rm -rf $HYPRLAND_CONFIG
 mkdir -p $HYPRLAND_CONFIG
-cp -r $SCRIPT_WD/* $HYPRLAND_CONFIG
+cp -r $SCRIPT_WD/../. $HYPRLAND_CONFIG
 
 # Copy Files to Home
 cp -r $HYPRLAND_CONFIG/home/. $HOME && rm -r $HYPRLAND_CONFIG/home
@@ -95,8 +95,8 @@ FLAVOUR="mocha"
 git clone "$CATPPUCCIN_SDDM_THEME_GIT_URL" && cd $SDDM_THEME_FOLDER
 sudo mkdir -p /usr/share/sddm/themes
 sudo cp -r "src/catppuccin-$FLAVOUR" /usr/share/sddm/themes
-sudo echo "[Theme]" >> $SDDM_CONFIG
-sudo echo "Current=catppuccin-$FLAVOUR" >> $SDDM_CONFIG
+echo "[Theme]" | sude tee -a $SDDM_CONFIG
+echo "Current=catppuccin-$FLAVOUR" | sudo tee -a $SDDM_CONFIG
 cd $STAGING_FOLDER
 
 # Download and setup My NeoVim + Packer
@@ -116,9 +116,11 @@ cp "Catppuccin-${FLAVOUR}.conf" "$COLORS_FOLDER"
 cd $STAGING_FOLDER
 
 # Source .environment and autosuggestions in .zshrc and .bashrc
-echo "#Environment\nsource $HOME/.environment" >> $HOME/.zshrc
-echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh\n" >> $HOME/.zshrc
-echo "#Environment\nsource $HOME/.environment\n" >> $HOME/.bashrc
+echo "#Environment" | tee -a $HOME/.zshrc
+echo "source $HOME/.environment" | tee -a $HOME/.zshrc
+echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" | tee -a $HOME/.zshrc
+echo "#Environment" | tee -a $HOME/.bashrc
+echo "source $HOME/.environment" | tee -a $HOME/.bashrc
 
 
 cd "$(pwd)"
