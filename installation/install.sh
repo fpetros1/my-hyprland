@@ -4,6 +4,7 @@ PACKAGES_FILE="hyprland-arch-core-packages"
 SCRIPT_WD="$( cd "$( dirname "$0" )" && pwd )"
 HYPRLAND_CONFIG="$HOME/.config/hypr"
 SDDM_CONFIG="/etc/sddm.conf"
+KEYD_CONFIG="/etc/keyd/default.conf"
 STAGING_FOLDER="$HOME/Staging"
 PARU_GIT_URL="https://aur.archlinux.org/paru-bin.git"
 YAY_GIT_URL="https://aur.archlinux.org/yay-bin.git"
@@ -122,6 +123,13 @@ mkdir -p "$COLORS_FOLDER"
 git clone "$CATPPUCCIN_QT5CT_GIT_URL" && cd $QT5CT_FOLDER
 cp "Catppuccin-${FLAVOUR}.conf" "$COLORS_FOLDER" 
 cd $STAGING_FOLDER
+
+# Setup keyd
+sudo systemctl enable keyd
+echo "[ids]" | sudo tee -a $KEYD_CONFIG
+echo "*" | sudo tee -a $KEYD_CONFIG
+echo "[main]" | sudo tee -a $KEYD_CONFIG
+echo "rightmeta = home" | sudo tee -a $KEYD_CONFIG
 
 # Source .environment and autosuggestions in .zshrc and .bashrc
 echo "#Environment" | tee -a $HOME/.zshrc

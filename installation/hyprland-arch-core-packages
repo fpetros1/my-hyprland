@@ -1,3 +1,4 @@
+keyd
 cantarell-static-fonts
 adobe-source-han-sans-cn-fonts
 adobe-source-han-sans-hk-fonts
@@ -16,6 +17,7 @@ bitwarden
 blueman
 breeze
 xorg-xmodmap
+xorg-xhost
 catppuccin-gtk-theme-mocha
 discord
 discord-screenaudio

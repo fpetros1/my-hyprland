@@ -13,6 +13,3 @@ xhost + local:
 # Set XWayland Primary Monitor
 xrandr --output "$(xrandr | awk '/2560x1440/ {print $1}' | head -n 1)" --primary
 
-# Replace Right Super with Home
-xmodmap -e 'keycode 134 = Home'
-
