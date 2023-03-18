@@ -31,27 +31,33 @@ fi
 mkdir -p $STAGING_FOLDER && cd $STAGING_FOLDER
 
 # Install Git
-sudo pacman -S --needed git base-devel findutils
+sudo pacman -Syu --needed git base-devel findutils
 
 # Clone and install Paru/Yay
 # Paru
 PARU_BUILD_FOLDER="paru-bin"
 rm -rf $STAGING_FOLDER/$PARU_BUILD_FOLDER
 git clone "$PARU_GIT_URL" && cd $PARU_BUILD_FOLDER
-makepkg -si && cd $STAGING_FOLDER
+makepkg --needed --noconfirm -si && cd $STAGING_FOLDER
 # Yay
 YAY_BUILD_FOLDER="yay-bin"
 rm -rf $STAGING_FOLDER/$YAY_BUILD_FOLDER
 git clone "$YAY_GIT_URL" && cd $YAY_BUILD_FOLDER
-makepkg -si && cd $STAGING_FOLDER
+makepkg --needed --noconfirm -si && cd $STAGING_FOLDER
 
 # Uninstall xdg-desktop-portal implementations that cause problems with hyprland's 
 paru -R xdg-desktop-portal-wlr xdg-desktop-portal-gnome
 paru -Rnsdd xdg-desktop-portal-kde
 
+# Remove conflicting packages
+paru -R cantarell-fonts
+
 # Install my Hyprland core packages
 CORE_PACKAGES=$(echo "$(cat $SCRIPT_WD/$PACKAGES_FILE | xargs)")
-paru -Syu $CORE_PACKAGES
+IFS=" " read -ra PACKAGE <<<  "$CORE_PACKAGES"
+for package in "${PACKAGE[@]}"; do
+	paru --noconfirm --needed -S $package
+done
 
 # Install Xpad with support for 8bitdo Ultimate Controller
 sudo git clone "$XPAD_GIT_URL" /usr/src/xpad-0.4
@@ -71,12 +77,13 @@ mkdir -p $HYPRLAND_CONFIG
 cp -r $SCRIPT_WD/../* $HYPRLAND_CONFIG
 
 # Copy Files to Home
-cp -r $HYPRLAND_CONFIG/home/. $HOME && rm -r $HYPRLAND_CONFIG/home
+cp -r $SCRIPT_WD/home/. $HOME
 
 # Delete installation Folder
 rm -r $HYPRLAND_CONFIG/installation
 
 # Delete Git Files
+rm -rf $HYPRLAND_CONFIG/.git
 rm $HYPRLAND_CONFIG/.gitignore
 rm $HYPRLAND_CONFIG/README.md
 rm $HYPRLAND_CONFIG/LICENSE.md
@@ -95,7 +102,8 @@ FLAVOUR="mocha"
 git clone "$CATPPUCCIN_SDDM_THEME_GIT_URL" && cd $SDDM_THEME_FOLDER
 sudo mkdir -p /usr/share/sddm/themes
 sudo cp -r "src/catppuccin-$FLAVOUR" /usr/share/sddm/themes
-echo "[Theme]" | sude tee -a $SDDM_CONFIG
+sudo rm $SDDM_CONFIG
+echo "[Theme]" | sudo tee -a $SDDM_CONFIG
 echo "Current=catppuccin-$FLAVOUR" | sudo tee -a $SDDM_CONFIG
 cd $STAGING_FOLDER
 
@@ -124,5 +132,5 @@ echo "source $HOME/.environment" | tee -a $HOME/.bashrc
 
 
 cd "$(pwd)"
-echo "\nDone."
+echo "Done."
 

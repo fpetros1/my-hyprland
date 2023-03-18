@@ -1,13 +1,14 @@
+cantarell-static-fonts
 adobe-source-han-sans-cn-fonts
 adobe-source-han-sans-hk-fonts
 adobe-source-han-sans-jp-fonts
 adobe-source-han-sans-otc-fonts
 adobe-source-han-sans-tw-fonts
+ttf-ms-win11-auto
 adwaita-for-steam-git
 adwaita-qt5
 alacritty
 awakened-poe-trade-git
-balena-etcher
 qt5-wayland
 qt6-wayland
 bat
@@ -21,8 +22,6 @@ discord-screenaudio
 dkms
 exa
 file-roller
-cantarell-static-fonts
-ttf-ms-win11-auto
 firefox
 steam
 flatpak
