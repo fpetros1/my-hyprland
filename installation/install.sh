@@ -101,6 +101,9 @@ sudo systemctl disable xdm
 sudo systemctl disable lxdm
 sudo systemctl enable sddm
 
+# Enable Cronie for Timeshift scheduled Backups
+sudo systemctl enable cronie
+
 # Download and set SDDM theme
 SDDM_THEME_FOLDER="sddm"
 FLAVOUR="mocha"
@@ -141,7 +144,6 @@ echo "source $HOME/.environment" | tee -a $HOME/.zshrc
 echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" | tee -a $HOME/.zshrc
 echo "#Environment" | tee -a $HOME/.bashrc
 echo "source $HOME/.environment" | tee -a $HOME/.bashrc
-
 
 cd "$(pwd)"
 echo "Done."
