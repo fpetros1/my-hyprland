@@ -143,6 +143,8 @@ tooltip {
 }
 
 #custom-notifications {
+	padding-left: 10px;
+	padding-right: 10px;
 	background-color: alpha(@pink, 0.8);
 	margin-right: 15px;
 }

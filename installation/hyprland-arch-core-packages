@@ -79,10 +79,12 @@ qt-gstreamer
 ripgrep
 sddm-git
 swappy
-nemo
 ffmpegthumbnailer
-nemo-python
 thunderbird
+thunar
+thunar-archive-plugin
+thunar-nextcloud-plugin
+xfce4-settings
 timeshift-bin
 ttf-ubuntu-font-family
 vim

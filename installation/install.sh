@@ -77,6 +77,10 @@ rm -rf $HYPRLAND_CONFIG
 mkdir -p $HYPRLAND_CONFIG
 cp -r $SCRIPT_WD/../* $HYPRLAND_CONFIG
 
+# Link Alacritty Files
+mkdir -p $HOME/.config/alacritty
+ln $HYPRLAND_CONFIG/alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+
 # Copy Files to Home
 cp -r $SCRIPT_WD/home/. $HOME
 
