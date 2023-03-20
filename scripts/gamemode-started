@@ -1,4 +1,4 @@
 #!/bin/sh
 
-notify-send "GameMode Started" &
+#notify-send "GameMode Started" &
 

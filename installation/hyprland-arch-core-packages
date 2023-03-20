@@ -92,7 +92,7 @@ waybar-hyprland-git
 wget
 whatsie
 wofi
-wtype
+ydotool
 youtube-music-bin
 zsh
 zsh-autosuggestions

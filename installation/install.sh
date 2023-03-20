@@ -138,6 +138,10 @@ echo "*" | sudo tee -a $KEYD_CONFIG
 echo "[main]" | sudo tee -a $KEYD_CONFIG
 echo "rightmeta = home" | sudo tee -a $KEYD_CONFIG
 
+# Setup ydotool
+sudo usermod -aG input $USER
+systemctl --user enable ydotool
+
 # Source .environment and autosuggestions in .zshrc and .bashrc
 echo "#Environment" | tee -a $HOME/.zshrc
 echo "source $HOME/.environment" | tee -a $HOME/.zshrc
@@ -146,5 +150,5 @@ echo "#Environment" | tee -a $HOME/.bashrc
 echo "source $HOME/.environment" | tee -a $HOME/.bashrc
 
 cd "$(pwd)"
-echo "Done."
+echo "Done. Please Reboot"
 

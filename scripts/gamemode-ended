@@ -1,6 +1,10 @@
 #!/bin/sh
 
-notify-send "GameMode Ended" &
+#notify-send "GameMode Ended" &
 
-wtype -M win 0
+LEFT_SUPER="125"
+LEFT_SHIFT="42"
+F12="88"
+
+ydotool key "${LEFT_SUPER}:1" "${LEFT_SHIFT}:1" "${F12}:1" "${F12}:0" "${LEFT_SHIFT}:0" "${LEFT_SUPER}:0"
 
