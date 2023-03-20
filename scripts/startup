@@ -29,7 +29,7 @@ ${SCRIPTSDIR}/wallpaper &
 nextcloud --background &
 
 # Nextcloud Snap:
-# nextcloud-desktop-client.nextcloud --background &
+#nextcloud-desktop-client.nextcloud --background &
 
 # Blueman Applet
 blueman-applet &
@@ -41,6 +41,6 @@ kdeconnect-indicator &
 # PlayerCTLD
 playerctld daemon &
 
-# XWayland Configuration
+# XWaylandPrimary
 ${SCRIPTSDIR}/xwayland-config &
 

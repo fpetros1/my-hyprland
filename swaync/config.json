@@ -25,6 +25,10 @@
   "hide-on-action": true,
   "script-fail-notify": true,
   "scripts": {
+	  "sound": {
+		  "exec": "mpv --volume=40 /usr/share/sounds/freedesktop/stereo/message.oga",
+		  "app-name": "."
+	  }
   },
   "notification-visibility": {
   },
