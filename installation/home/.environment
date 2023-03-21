@@ -10,6 +10,8 @@ alias l.="exa -a | egrep '^\.'"                                     # show only 
 # Replace some more things with better alternatives
 alias vim='nvim'
 alias cat='bat'
+alias thunar='env GDK_BACKEND=x11 thunar'
+alias file-roller='env GDK_BACKEND=x11 file-roller'
 
 export MANGOHUD_CONFIG="fps_limit=234,wine,gamemode,cpu_temp,gpu_temp"
 export PATH="$PATH:$HOME/.local/bin"

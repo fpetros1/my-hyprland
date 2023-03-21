@@ -24,6 +24,7 @@ tooltip {
 #battery,
 #clock,
 #cpu,
+#gamemode,
 #disk,
 #memory,
 #tray,
@@ -41,7 +42,7 @@ tooltip {
 	border-radius: 4px;
 	margin: 4px 0px;
 	padding: 0px 4px;
-  	color: #3A3B3C;
+  	/*color: #3A3B3C;*/
 	margin-right: 2px;
 }
 
@@ -49,6 +50,11 @@ tooltip {
 	background-color: alpha(@overlay2, 0.8); 
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+#gamemode {
+	background-color: alpha(@red, 0.8);
+	padding-left: 8px;
 }
 
 #workspaces {
