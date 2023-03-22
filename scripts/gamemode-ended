@@ -6,5 +6,9 @@ LEFT_SUPER="125"
 LEFT_SHIFT="42"
 F12="88"
 
+# Go to Steam Workspace
 ydotool key "${LEFT_SUPER}:1" "${LEFT_SHIFT}:1" "${F12}:1" "${F12}:0" "${LEFT_SHIFT}:0" "${LEFT_SUPER}:0"
+
+# Kill Pending Gamescope Process
+$HOME/.config/hypr/scripts/kill-pending-gamescope-process
 

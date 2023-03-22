@@ -1,0 +1,12 @@
+#!/bin/sh
+
+
+# Kill pending gamescope processes
+GAMESCOPE_APPLICATION_NAME=$(ps aux | grep gamescope | grep -v grep | awk '{print $11}')
+echo $GAMESCOPE_APPLICATION_NAME
+
+if [ ! -z "${GAMESCOPE_APPLICATION_NAME}" ]; then
+	GAMESCOPE_PID=$(ps aux | grep gamescope | grep -v grep | awk '{print $2}')
+	kill $GAMESCOPE_PID
+fi
+
