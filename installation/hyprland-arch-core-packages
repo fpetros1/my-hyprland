@@ -13,6 +13,10 @@ awakened-poe-trade-git
 qt5-wayland
 qt6-wayland
 bat
+easyeffects
+calf
+lsp-plugins-lv2
+mda.lv2
 bitwarden
 blueman
 breeze
@@ -102,7 +106,7 @@ ttf-ubuntu-font-family
 vim
 waybar-hyprland-git
 wget
-whatsie
+whatsapp-for-linux
 wofi
 ydotool
 youtube-music-bin

@@ -12,8 +12,8 @@ alias vim='nvim'
 alias cat='bat'
 alias thunar='env GDK_BACKEND=x11 thunar'
 alias file-roller='env GDK_BACKEND=x11 file-roller'
+alias clear='clear; colorscript -e pacman'
 
-export MANGOHUD_CONFIG="fps_limit=234,wine,gamemode,cpu_temp,gpu_temp"
 export PATH="$PATH:$HOME/.local/bin"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS::$HOME/.local/share/applications"
 
