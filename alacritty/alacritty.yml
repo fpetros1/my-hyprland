@@ -442,7 +442,7 @@ shell:
   program: /usr/bin/zsh
   args:
     - -c
-    - neofetch; exec /usr/bin/zsh
+    - colorscript -e pacman; exec /usr/bin/zsh
 
 # Startup directory
 #
