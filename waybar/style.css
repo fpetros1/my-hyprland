@@ -109,9 +109,8 @@ tooltip {
 	background-color: alpha(@overlay2, 0.6);
 	padding-left: 5px;
 	padding-right: 5px;
-	margin-top: 4px;
-	margin-bottom: 4px;
 }
+
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
