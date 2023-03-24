@@ -2,14 +2,6 @@
 
 SCRIPTSDIR=$HOME/.config/hypr/scripts
 
-# Kill already running process
-_ps=(waybar mako)
-for _prs in "${_ps[@]}"; do
-	if [[ $(pidof ${_prs}) ]]; then
-		killall -9 ${_prs}
-	fi
-done
-
 # Apply themes
 ${SCRIPTSDIR}/gtkconfig &
 
@@ -28,6 +20,9 @@ ${SCRIPTSDIR}/wallpaper &
 # Nextcloud Native:
 nextcloud --background &
 
+# Easy Effects Service
+easyeffects --gapplication-service &
+
 # Nextcloud Snap:
 #nextcloud-desktop-client.nextcloud --background &
 
@@ -43,4 +38,7 @@ playerctld daemon &
 
 # XWaylandPrimary
 ${SCRIPTSDIR}/xwayland-config &
+
+# Bitwarden
+bitwarden-desktop &
 
