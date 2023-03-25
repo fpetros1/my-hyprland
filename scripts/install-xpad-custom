@@ -1,0 +1,1 @@
+sudo dkms install -m xpad -v 0.4 --force
