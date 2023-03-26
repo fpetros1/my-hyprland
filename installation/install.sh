@@ -84,6 +84,9 @@ ln -s $HYPRLAND_CONFIG/alacritty $HOME/.config/alacritty
 # Copy Files to Home
 cp -r $SCRIPT_WD/home/. $HOME
 
+# Copy Files to /etc
+cp -r $SCRIPT_WD/etc/. /etc
+
 # Delete installation Folder
 rm -r $HYPRLAND_CONFIG/installation
 
@@ -144,6 +147,10 @@ systemctl --user enable ydotool
 
 # Create Script Links in /usr/bin
 exec $HYPRLAND_CONFIG/scripts/update-script-links
+
+# Add user to group gamenice, to be able to nice the gamescope process
+sudo groupadd gamenice
+sudo usermod -aG gamenice $USER
 
 # Source .environment and autosuggestions in .zshrc and .bashrc
 echo "#Environment" | tee -a $HOME/.zshrc
