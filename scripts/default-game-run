@@ -1,0 +1,4 @@
+#!/bin/bash
+
+exec gamescope -h 1440 -r 468 gamemoderun "$@"
+

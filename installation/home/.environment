@@ -17,5 +17,4 @@ alias cls='command clear'
 
 export PATH="$PATH:$HOME/.local/bin"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS::$HOME/.local/share/applications"
-export PATH="$HOME/.config/hypr/scripts:$PATH"
 

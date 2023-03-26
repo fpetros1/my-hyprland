@@ -142,6 +142,9 @@ echo "rightmeta = home" | sudo tee -a $KEYD_CONFIG
 sudo usermod -aG input $USER
 systemctl --user enable ydotool
 
+# Create Script Links in /usr/bin
+exec $HYPRLAND_CONFIG/scripts/update-script-links
+
 # Source .environment and autosuggestions in .zshrc and .bashrc
 echo "#Environment" | tee -a $HOME/.zshrc
 echo "source $HOME/.environment" | tee -a $HOME/.zshrc
