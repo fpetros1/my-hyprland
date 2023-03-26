@@ -1,21 +1,19 @@
 #!/bin/bash
 
-SCRIPTSDIR=$HOME/.config/hypr/scripts
-
 # Apply themes
-${SCRIPTSDIR}/gtkconfig &
+gtkconfig &
 
 # Lauch notification daemon (swaync)
-${SCRIPTSDIR}/notifications &
+notifications &
 
 # Lauch statusbar (waybar)
-${SCRIPTSDIR}/statusbar &
+statusbar &
 
 # Polkit
 /usr/lib/polkit-kde-authentication-agent-1 &
 
 # Hyprpaper
-${SCRIPTSDIR}/wallpaper &
+wallpaper &
 
 # Nextcloud Native:
 nextcloud --background &
@@ -37,7 +35,7 @@ kdeconnect-indicator &
 playerctld daemon &
 
 # XWaylandPrimary
-${SCRIPTSDIR}/xwayland-config &
+xwayland-config &
 
 # Bitwarden
 bitwarden-desktop &
