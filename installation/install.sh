@@ -134,6 +134,36 @@ git clone "$CATPPUCCIN_QT5CT_GIT_URL" && cd $QT5CT_FOLDER
 cp "Catppuccin-${FLAVOUR}.conf" "$COLORS_FOLDER" 
 cd $STAGING_FOLDER
 
+# Install Catppuccin GRUB theme if bootloader is installed
+GRUB_COMMAND=$(command -v grub-mkconfig)
+if [ ! -z $GRUB_COMMAND ]; then	
+	THEME_FOLDER="grub/src"
+	FLAVOUR="mocha"
+	GRUB_THEME_FOLDER="/usr/share/grub/themes"
+	GRUB_ESCAPED_THEME_FOLDER="\/usr\/share\/grub\/themes"
+	GRUB_DEFAULTS_FILE="/etc/default/grub"
+	CATPPUCIN_GRUB_THEME="catppuccin-${FLAVOUR}-grub-theme"
+	CATPPUCIN_ESCAPED_GRUB_THEME="catppuccin\-${FLAVOUR}\-grub\-theme"
+	
+	git clone https://github.com/catppuccin/grub.git && cd $THEME_FOLDER
+	sudo cp -r $CATPPUCIN_GRUB_THEME $GRUB_THEME_FOLDER
+	sudo cp $GRUB_DEFAULTS_FILE "${GRUB_DEFAULTS_FILE}.bkp"
+
+	GRUB_DEFAULTS_NO_BG=$(sed '/^GRUB\_BACKGROUND\=/ s//\#&/' $GRUB_DEFAULTS_FILE)
+	echo $GRUB_DEFAULTS_NO_BG | sudo tee $GRUB_DEFAULTS_FILE
+
+	THEME_LINE="GRUB\_THEME=\"${GRUB_ESCAPED_THEME_FOLDER}\/${CATPPUCIN_ESCAPED_GRUB_THEME}\/theme\.txt\""
+	
+	GRUB_DEFAULTS_WITH_ALREADY_THEME=$(sed "/^GRUB\_THEME\=.*/ s//${THEME_LINE}/" $GRUB_DEFAULTS_FILE)
+	echo $GRUB_DEFAULTS_WITH_ALREADY_THEME | sudo tee $GRUB_DEFAULTS_FILE
+	
+	GRUB_DEFAULTS_WITH_NO_THEME=$(sed "/^\#GRUB\_THEME\=.*/ s//${THEME_LINE}/" $GRUB_DEFAULTS_FILE)
+	echo $GRUB_DEFAULTS_WITH_NO_THEME | sudo tee $GRUB_DEFAULTS_FILE
+
+	sudo $GRUB_COMMAND -o /boot/grub/grub.cfg
+	cd $STAGING_FOLDER
+fi
+
 # Setup keyd
 sudo systemctl enable keyd
 echo "[ids]" | sudo tee -a $KEYD_CONFIG
