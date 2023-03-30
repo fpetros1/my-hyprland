@@ -1,0 +1,26 @@
+#!/bin/bash
+
+SELF="$0"
+
+GUI="$1"
+
+if [ "$GUI" == "gui" ]; then
+	alacritty --class "kill-process" -e "$0"
+	exit
+fi
+
+SELECTED="$(ps --user $USER -F | \
+	tail -n +2 | \
+	awk '{print $2" "$11" "$12}' | \
+	fzf --header "Pick a Process to Kill:")"
+
+if [[ -n $SELECTED ]]; then
+	ANSWER="$(echo -e "No\nYes" | fzf --header "Kill $SELECTED?")"
+	if [[ $ANSWER == "Yes" ]]; then
+		kill -9 "${SELECTED%% *}"
+		notify-send "Process $SELECTED has been killed." && exit 0
+	else
+		notify-send "User choose not to kill a process." && exit 1
+	fi
+fi
+

@@ -109,7 +109,7 @@
       "exec":"checkupdates | wc -l",
       "exec-if":"[[ $(checkupdates | wc -l) ]]",
       "interval":600,
-      "on-click":"arch-updater"
+      "on-click":"os-updater"
    },
    "pulseaudio":{
       "format":"{icon} {volume}",

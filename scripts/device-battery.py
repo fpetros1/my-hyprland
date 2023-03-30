@@ -2,6 +2,13 @@
 
 import subprocess
 import json
+import os
+import time
+
+lockfile_folder = f'{os.getenv("HOME")}/.temp/device-battery'
+
+if not os.path.exists(lockfile_folder):
+    subprocess.run(['mkdir', '-p', lockfile_folder])
 
 device_name_header = 'Device:'
 model_name_header = 'model:'
@@ -44,12 +51,19 @@ for line in result.stdout.split('\n'):
 
 device_string = '\n'
 battery_numbers = []
+lockfiles = []
 
 for device in filter(filter_with_model_and_statistics, devices):
     battery_number = float(device[percentage_property].replace('%',''))
     battery_numbers.append(battery_number)
     if battery_number <= warning_threshold:
-        subprocess.run(['notify-send', f'[{device[model_property]}] \n\nLow Battery: {device[percentage_property]}'])
+        simple_name = device[model_property].replace("/", "").replace(" ", "")
+        lockfile_path = f'{lockfile_folder}/{simple_name}.notif.lock'
+        if not os.path.exists(lockfile_path):
+           lockfile = open(lockfile_path, "x")
+           lockfile.close()
+           lockfiles.append(lockfile_path)
+           subprocess.run(['notify-send', f'[{device[model_property]}] \n\nLow Battery: {device[percentage_property]}'])
     device_string += f'{device[model_property]}: {device[percentage_property]}\n'
 
 average_battery = int(sum(battery_numbers) / len(battery_numbers))
@@ -89,5 +103,10 @@ json_response = {
 }
 
 print(json.dumps(json_response))
+
+time.sleep(3)
+
+for lockfile in lockfiles:
+    os.remove(lockfile)
 
 

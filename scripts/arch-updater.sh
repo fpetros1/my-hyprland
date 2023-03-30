@@ -1,7 +1,9 @@
 #!/bin/bash
 
-PACKAGE_MANAGER="paru"
+paru -Syu
 
-alacritty --config-file "$ALACRITTY_CONFIG" --class update -e "$PACKAGE_MANAGER" -Syu
-notify-send 'The system has been updated' 
+KERNEL="linux-cachyos-bmq"
+
+sudo mkinitcpio -p $KERNEL
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
