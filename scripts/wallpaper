@@ -6,8 +6,17 @@ CONFIG_FILES="$CONFIG"
 
 trap "killall hyprpaper" EXIT
 
-while true; do
+run_hyprpaper () {
 	hyprpaper &
+	sleep 1
+	hyprctl hyprpaper preload "$WALLPAPER"
+	hyprctl hyprpaper wallpaper "DP-1,$WALLPAPER"
+	hyprctl hyprpaper wallpaper "DP-2,$WALLPAPER"
+	hyprctl hyprpaper wallpaper "DP-3,$WALLPAPER"
+}
+
+while true; do
+	run_hyprpaper
 	inotifywait -e create,modify $CONFIG_FILES
 	killall hyprpaper
 done

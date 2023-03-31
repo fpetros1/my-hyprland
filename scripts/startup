@@ -1,19 +1,22 @@
 #!/bin/bash
 
+# Hyprpaper
+wallpaper &
+
+# Lauch statusbar (waybar)
+statusbar &
+
 # Apply themes
 gtkconfig &
 
 # Lauch notification daemon (swaync)
 notifications &
 
-# Lauch statusbar (waybar)
-statusbar &
-
 # Polkit
 /usr/lib/polkit-kde-authentication-agent-1 &
 
-# Hyprpaper
-wallpaper &
+# Idle Management
+idle &
 
 # Nextcloud Native:
 nextcloud --background &
