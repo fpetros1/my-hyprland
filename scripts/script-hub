@@ -1,0 +1,36 @@
+#!/bin/bash
+
+SELF="$0"
+
+SELF_SCRIPT_NAME=$(echo ${SELF##*/})
+
+GUI="$1"
+
+if [ "$GUI" == "gui" ]; then
+	alacritty --class "kill-process" -e "$0"
+	exit
+fi
+
+SCRIPTS_DIR="$HOME/.config/hypr/scripts"
+
+SELECTED="$(command ls $SCRIPTS_DIR | \
+	cut -d'.' -f1 | \
+	grep -v "$SELF_SCRIPT_NAME" | \
+	fzf --header "Pick a Script:")"
+
+if [[ -n $SELECTED ]]; then
+	ACTION=$(echo -e "Run\nEdit" | fzf --header "Choose an Action:")
+
+	if [ "$ACTION" == "Run" ]; then
+		exec "$SELECTED"
+		exit
+	fi
+	
+	LINK_PATH=$(which $SELECTED)
+	SCRIPT_REAL_PATH=$(realpath $LINK_PATH)
+
+	nohup alacritty --class "script-editor" -e $EDITOR $SCRIPT_REAL_PATH &
+	sleep 0.1
+	exit
+fi
+

@@ -87,6 +87,9 @@ cp -r $SCRIPT_WD/home/. $HOME
 # Copy Files to /etc
 cp -r $SCRIPT_WD/etc/. /etc
 
+# Copy Files to /usr
+cp -r $SCRIPT_WD/usr/. /usr
+
 # Delete installation Folder
 rm -r $HYPRLAND_CONFIG/installation
 

@@ -8,7 +8,8 @@ NICE_COMMAND="nice -n 20"
 GAMESCOPE_COMMAND="gamescope --adaptive-sync --hdr-enabled -h 1440 -r 468 -o 60"
 GAMEMODE_COMMAND="gamemoderun"
 
-exec env VKD3D_CONFIG="${VKD3D_CONFIG}"\
+exec\
+	env VKD3D_CONFIG="${VKD3D_CONFIG}"\
 	PROTON_HIDE_NVIDIA_GPU="${PROTON_HIDE_NVIDIA_GPU}"\
 	RADV_PERFTEST=${RADV_PERFTEST}\
 	$NICE_COMMAND\

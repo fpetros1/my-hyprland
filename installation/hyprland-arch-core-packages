@@ -72,7 +72,7 @@ xdg-dekstop-portal-gtk
 xdg-desktop-portal-hyprland-git
 gvfs
 hyprland
-hyprpaper-git
+swww-git
 imv
 inotify-tools
 kdeconnect
@@ -102,6 +102,9 @@ swappy
 ffmpegthumbnailer
 thunderbird
 thunar
+tumbler
+bc
+libwebp
 thunar-archive-plugin
 thunar-nextcloud-plugin
 xfce4-settings

@@ -16,11 +16,13 @@ SELECTED="$(ps --user $USER -F | \
 
 if [[ -n $SELECTED ]]; then
 	ANSWER="$(echo -e "No\nYes" | fzf --header "Kill $SELECTED?")"
+	
 	if [[ $ANSWER == "Yes" ]]; then
 		kill -9 "${SELECTED%% *}"
 		notify-send "Process $SELECTED has been killed." && exit 0
-	else
-		notify-send "User choose not to kill a process." && exit 1
+		exit
 	fi
+	
+	notify-send "User choose not to kill a process." && exit 1
 fi
 

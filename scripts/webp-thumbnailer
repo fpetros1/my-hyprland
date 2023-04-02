@@ -1,0 +1,33 @@
+#!/bin/bash
+
+FILE=$(echo "${1//\'/''}")
+#echo "DEBUG: $FILE" | tee $HOME/debug.log
+MAX_DIMENSION="$2"
+OUTPUT_PATH="$3"
+#echo "DEBUG: $OUTPUT_PATH" | tee -a $HOME/debug.log
+
+WEBP_INFO=$(webpinfo "$FILE")
+WEBP_WIDTH="`echo "$WEBP_INFO" | grep Width | head -n 1 | cut -d':' -f2 | sed 's/ *$//g'`"
+WEBP_HEIGHT="`echo "$WEBP_INFO" | grep Height | head -n 1 | cut -d':' -f2 | sed 's/ *$//g'`"
+IS_ANIMATION="`echo "$WEBP_INFO" | grep Animation | head -n 1 | cut -d':' -f2 | sed 's/ *$//g'`"
+
+#echo -e "DEBUG: Metadata:\n$WEBP_INFO" | tee -a $HOME/debug.log
+#echo "DEBUG: Width: $WEBP_WIDTH" | tee -a $HOME/debug.log
+#echo "DEBUG: Height: $WEBP_HEIGHT" | tee -a $HOME/debug.log
+#echo "DEBUG: Animation: $IS_ANIMATION" | tee -a $HOME/debug.log
+
+if [[ $WEBP_WIDTH -gt $WEBP_HEIGHT ]]; then
+    WEBP_THUMB_WIDTH=$MAX_DIMENSION
+    WEBP_THUMB_HEIGHT=`bc <<< "scale=10;f=$WEBP_HEIGHT*($WEBP_THUMB_WIDTH/$WEBP_WIDTH);scale=0;f/1"`
+else
+    WEBP_THUMB_HEIGHT=$MAX_DIMENSION
+    WEBP_THUMB_WIDTH=`bc <<< "scale=10;f=$WEBP_WIDTH*($WEBP_THUMB_HEIGHT/$WEBP_HEIGHT);scale=0;f/1"`
+fi
+
+if [[ "$IS_ANIMATION" -eq 1 ]]; then
+	webpmux -get frame 1 "$FILE" -o - | dwebp -scale $WEBP_THUMB_WIDTH $WEBP_THUMB_HEIGHT -o "$OUTPUT_PATH" -- -
+	exit
+fi
+
+dwebp "$FILE" -scale $WEBP_THUMB_WIDTH $WEBP_THUMB_HEIGHT -o "$OUTPUT_PATH"
+

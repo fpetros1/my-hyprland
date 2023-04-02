@@ -28,7 +28,7 @@ easyeffects --gapplication-service &
 #nextcloud-desktop-client.nextcloud --background &
 
 # Blueman Applet
-blueman-applet &
+#blueman-applet &
 
 # KDE Connect
 /usr/lib/kdeconnectd &
