@@ -1,7 +1,8 @@
 #!/bin/bash
 
 perform_update() {
-	alacritty --config-file "$ALACRITTY_CONFIG" --class update --hold -e $SHELL -c "$UPDATE_COMMAND"
+	CMD=$([[ $TERMINAL == "alacritty" ]] && echo "-e $SHELL -c $UPDATE_COMMAND" || echo "$SHELL -c $UPDATE_COMMAND")
+	$TERMINAL --class update --hold $CMD
 }
 
 OS_UPDATE_COMMAND="arch-updater"

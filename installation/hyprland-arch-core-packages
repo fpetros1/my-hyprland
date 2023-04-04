@@ -8,7 +8,10 @@ adobe-source-han-sans-tw-fonts
 ttf-ms-win11-auto
 adwaita-for-steam-git
 adwaita-qt5
-alacritty
+kitty
+lf
+udiskie
+pistol-git
 awakened-poe-trade-git
 qt5-wayland
 qt6-wayland
@@ -17,7 +20,6 @@ easyeffects
 calf
 lsp-plugins-lv2
 mda.lv2
-shell-color-scripts
 bitwarden
 blueman
 breeze
@@ -42,7 +44,7 @@ discord
 discord-screenaudio
 dkms
 exa
-file-roller
+peazip-qt-bin
 firefox
 steam
 flatpak
@@ -82,7 +84,7 @@ swayidle
 mesa-utils
 mpv
 ncpamixer
-neofetch
+fastfetch
 neovim
 nerd-fonts-meta
 net-tools
@@ -101,13 +103,8 @@ sddm-git
 swappy
 ffmpegthumbnailer
 thunderbird
-thunar
-tumbler
 bc
 libwebp
-thunar-archive-plugin
-thunar-nextcloud-plugin
-xfce4-settings
 timeshift-bin
 ttf-ubuntu-font-family
 vim

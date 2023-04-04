@@ -1,11 +1,12 @@
 #!/bin/bash
 
 SELF="$0"
-
 GUI="$1"
 
 if [ "$GUI" == "gui" ]; then
-	alacritty --class "kill-process" -e "$0"
+	CMD=$([[ $TERMINAL == "alacritty" ]] && echo "-e $0" || echo "$0")
+
+	$TERMINAL --class "kill-process" $CMD
 	exit
 fi
 

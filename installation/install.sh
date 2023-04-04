@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 PACKAGES_FILE="hyprland-arch-core-packages"
 SCRIPT_WD="$( cd "$( dirname "$0" )" && pwd )"
@@ -78,8 +78,19 @@ mkdir -p $HYPRLAND_CONFIG
 cp -r $SCRIPT_WD/../* $HYPRLAND_CONFIG
 
 # Link Alacritty Files
-mkdir -p $HOME/.config/alacritty
+rm -rf $HOME/.config/alacritty
 ln -s $HYPRLAND_CONFIG/alacritty $HOME/.config/alacritty
+
+# Link Kitty Files
+rm -rf $HOME/.config/kitty
+ln -s $HYPRLAND_CONFIG/kitty $HOME/.config/kitty
+
+# Link FastFetch Files
+rm -rf $HOME/.config/fastfetch
+ln -s $HYPRLAND_CONFIG/fastfetch $HOME/.config/fastfetch
+
+# Link Pistol binary
+sudo ln -s $HOME/go/bin/pistol /usr/bin/pistol
 
 # Copy Files to Home
 cp -r $SCRIPT_WD/home/. $HOME
@@ -92,6 +103,12 @@ cp -r $SCRIPT_WD/usr/. /usr
 
 # Delete installation Folder
 rm -r $HYPRLAND_CONFIG/installation
+
+# Set Mimetypes for file manager
+FILE_MANAGER="lf.desktop"
+xdg-mime default "$FILE_MANAGER" inode/directory
+xdg-mime default "$FILE_MANAGER" x-directory/normal
+xdg-mime default "$FILE_MANAGER" x-content/unix-software
 
 # Delete Git Files
 rm -rf $HYPRLAND_CONFIG/.git
@@ -166,6 +183,26 @@ if [ ! -z $GRUB_COMMAND ]; then
 	sudo $GRUB_COMMAND -o /boot/grub/grub.cfg
 	cd $STAGING_FOLDER
 fi
+
+# Setup Firefox Profile
+PROFILE_NAME="fpetros"
+FIREFOX_PROFILES_FOLDER="$HOME/.mozilla/firefox"
+INSTALLS_INI="installs.ini"
+PROFILES_INI="profiles.ini"
+
+firefox -CreateProfile "$PROFILE_NAME"
+cd $FIREFOX_PROFILES_FOLDER
+
+PROFILE_FOLDER=$(basename $(find . -iname "*.$PROFILE_NAME"))
+cp -r $SCRIPT_WD/firefox/. $PROFILE_FOLDER
+
+INSTALLS_NEW_PROFILE=$(sed "/^Default\=.*\.default\-release/ s//Default=$PROFILE_FOLDER/" "$INSTALLS_INI")
+echo "$INSTALLS_NEW_PROFILE" | tee "$INSTALLS_INI"
+
+PROFILES_NEW_PROFILE=$(sed "/^Default\=.*\.default\-release/ s//Default=$PROFILE_FOLDER/" "$PROFILES_INI")
+echo "$PROFILES_NEW_PROFILE" | tee "$PROFILES_INI"
+
+cd $STAGING_FOLDER
 
 # Setup keyd
 sudo systemctl enable keyd

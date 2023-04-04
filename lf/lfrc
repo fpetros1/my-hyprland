@@ -1,0 +1,192 @@
+# icons
+set icons
+
+# interpreter for shell commands
+set shell zsh
+
+# set '-eu' options for shell commands
+# These options are used to have safer shell commands. Option '-e' is used to
+# exit on error and option '-u' is used to give error for unset variables.
+# Option '-f' disables pathname expansion which can be useful when $f, $fs, and
+# $fx variables contain names with '*' or '?' characters. However, this option
+# is used selectively within individual commands as it can be limiting at
+# times.
+set shellopts '-eu'
+
+# set internal field separator (IFS) to "\n" for shell commands
+# This is useful to automatically split file names in $fs and $fx properly
+# since default file separator used in these variables (i.e. 'filesep' option)
+# is newline. You need to consider the values of these options and create your
+# commands accordingly.
+set ifs "\n"
+
+# leave some space at the top and the bottom of the screen
+set scrolloff 10
+
+# Previews
+set previewer ~/.config/lf/lf_kitty_preview
+set cleaner ~/.config/lf/lf_kitty_clean
+
+# use enter for shell commands
+map <enter> shell
+
+# execute current file (must be executable)
+#map x $$f
+#map X !$f
+
+# dedicated keys for file opener actions
+map o &mimeopen $f
+map O $mimeopen --ask $f
+
+# define a custom 'open' command
+# This command is called when current file is not a directory. You may want to
+# use either file extensions and/or mime types here. Below uses an editor for
+# text files and a file opener for the rest.
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+cmd gohome ${{
+	set -f
+	lf -remote "send $id cd '$HOME'"
+}}
+
+map gh gohome
+
+cmd gomedia ${{
+	set -f
+	lf -remote "send $id cd '/run/media/$USER'"
+}}
+
+map gm gomedia
+
+cmd dragdrop ${{
+	set -f
+	FILES=$(echo "$fx" | xargs-escaped)
+	$SHELL -c "env GDK_BACKEND=x11 dragon-drop $FILES"
+}}
+
+map gdd dragdrop
+
+cmd pasteclip %{{
+	set -f
+	FILETYPE=$(wl-paste --list-types)
+	echo " Paste the file from clipboard($FILETYPE): " && read TARGET
+	wl-paste > "$TARGET"
+}}
+
+map gp pasteclip
+
+cmd cpclip ${{
+	set -f
+	if [[ -z "$fs" ]]; then
+		wl-copy < "$f"
+	fi
+}}
+
+map gc cpclip
+
+# define a custom 'rename' command without prompt for overwrite
+# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+# map r push :rename<space>
+
+# create file or directory
+cmd mkfile %{{
+	set -f
+	echo " Create a new file (Folders ends with '/'): " && read TARGET
+	CREATED=$(mkfile $TARGET -p)
+	echo " File created, do you wish to move to directory? [y/n] " && read MOVE
+	echo $CREATED
+	if [[ "$MOVE" == "y" ]]; then
+		lf -remote "send $id cd '$CREATED'"
+	fi
+}}
+
+map a mkfile
+
+# define a custom 'delete' command
+cmd delete ${{
+	set -f
+	FILES=$(echo "$fx" | xargs-escaped)
+	echo $FILES
+	$SHELL -c "rm -rf $FILES"
+}}
+
+# use '<delete>' key for either 'trash' or 'delete' command
+# map <delete> trash
+map DD delete
+
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+    esac
+}}
+
+map xe extract
+
+# compress current file or selected files with tar and gunzip
+cmd tar ${{
+    set -f
+	if [ -z "$fs" ]; then
+        tar czf "$f.tar.gz" "$f" 
+    else
+        FILES=$(echo $fs | xargs-map basename)
+		ARCHIVE=$(echo "$FILES" | awk '{print $1;}').tar.gz
+		$SHELL -c "tar czf $ARCHIVE $FILES"
+    fi
+}}
+
+map xt tar
+
+# compress current file or selected files with zip
+cmd zip ${{
+    set -f
+	if [ -z "$fs" ]; then
+        zip -r "$f.zip" $(basename $f)
+    else
+        FILES=$(echo $fs | xargs-map basename)
+		ARCHIVE=$(echo "$FILES" | awk '{print $1;}').zip
+		$SHELL -c "zip -r $ARCHIVE $FILES"
+    fi
+}}
+
+map xz zip
+
+# compress current file or selected files with zip
+cmd 7z ${{
+    set -f
+	if [ -z "$fs" ]; then
+        7z a "$f.7z" $(basename $f)
+    else
+        FILES=$(echo $fs | xargs-map basename)
+		ARCHIVE=$(echo "$FILES" | awk '{print $1;}').zip
+		$SHELL -c "7z a $ARCHIVE $FILES"
+    fi
+}}
+
+map x7 7z
+
+# set default application
+cmd default-application ${{
+	set -f
+	if [ -z "$fs" ]; then
+		FILETYPE=$(xdg-mime query filetype "$f")
+		APP=$({command ls /usr/share/applications/ & command ls $HOME/.local/share/applications} | sort -u | fzf)
+		xdg-mime default "$APP" "$FILETYPE"
+	fi
+
+}}
+
+map gda default-application
+

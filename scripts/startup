@@ -12,6 +12,8 @@ gtkconfig &
 # Lauch notification daemon (swaync)
 notifications &
 
+udiskie &
+
 # Polkit
 /usr/lib/polkit-kde-authentication-agent-1 &
 
@@ -19,7 +21,7 @@ notifications &
 idle &
 
 # Nextcloud Native:
-nextcloud --background &
+start-file-sync &
 
 # Easy Effects Service
 easyeffects --gapplication-service &

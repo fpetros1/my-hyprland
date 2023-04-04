@@ -7,7 +7,9 @@ SELF_SCRIPT_NAME=$(echo ${SELF##*/})
 GUI="$1"
 
 if [ "$GUI" == "gui" ]; then
-	alacritty --class "kill-process" -e "$0"
+	CMD=$([[ $TERMINAL == "alacritty" ]] && echo "-e $0" || echo "$0")
+
+	$TERMINAL --class "kill-process" $CMD
 	exit
 fi
 
@@ -29,8 +31,9 @@ if [[ -n $SELECTED ]]; then
 	LINK_PATH=$(which $SELECTED)
 	SCRIPT_REAL_PATH=$(realpath $LINK_PATH)
 
-	nohup alacritty --class "script-editor" -e $EDITOR $SCRIPT_REAL_PATH &
-	sleep 0.1
-	exit
+	CMD=$([[ $TERMINAL == "alacritty" ]] &&\
+		echo "-e $EDITOR $SCRIPT_REAL_PATH" || echo "$EDITOR $SCRIPT_REAL_PATH")
+	cd $(dirname $SCRIPT_REAL_PATH)
+	exec $CMD
 fi
 
