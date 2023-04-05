@@ -98,10 +98,12 @@ cmd mkfile %{{
 	set -f
 	echo " Create a new file (Folders ends with '/'): " && read TARGET
 	CREATED=$(mkfile $TARGET -p)
-	echo " File created, do you wish to move to directory? [y/n] " && read MOVE
-	echo $CREATED
-	if [[ "$MOVE" == "y" ]]; then
-		lf -remote "send $id cd '$CREATED'"
+	echo ""
+	if [[ ! "$CREATED" == "." ]]; then
+		echo " Directory created, do you wish to move to it? [y/n] " && read MOVE
+		if [[ "$MOVE" == "y" ]]; then
+			lf -remote "send $id cd '$CREATED'"
+		fi
 	fi
 }}
 

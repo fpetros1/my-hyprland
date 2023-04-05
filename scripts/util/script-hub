@@ -1,9 +1,5 @@
 #!/bin/bash
 
-SELF="$0"
-
-SELF_SCRIPT_NAME=$(echo ${SELF##*/})
-
 GUI="$1"
 
 if [ "$GUI" == "gui" ]; then
@@ -15,22 +11,23 @@ fi
 
 SCRIPTS_DIR="$HOME/.config/hypr/scripts"
 
-SELECTED="$(command ls $SCRIPTS_DIR | \
+SELECTED="$(command find $SCRIPTS_DIR | \
+	prune-dirs | \
+	map basename | \
 	cut -d'.' -f1 | \
-	grep -v "$SELF_SCRIPT_NAME" | \
 	fzf --header "Pick a Script:")"
 
 if [[ -n $SELECTED ]]; then
 	ACTION=$(echo -e "Run\nEdit" | fzf --header "Choose an Action:")
 
-	if [ "$ACTION" == "Run" ]; then
-		exec "$SELECTED"
-		exit
-	fi
-	
 	LINK_PATH=$(which $SELECTED)
 	SCRIPT_REAL_PATH=$(realpath $LINK_PATH)
 
+	if [ "$ACTION" == "Run" ]; then
+		exec "$SCRIPT_REAL_PATH"
+		exit
+	fi
+	
 	CMD=$([[ $TERMINAL == "alacritty" ]] &&\
 		echo "-e $EDITOR $SCRIPT_REAL_PATH" || echo "$EDITOR $SCRIPT_REAL_PATH")
 	cd $(dirname $SCRIPT_REAL_PATH)

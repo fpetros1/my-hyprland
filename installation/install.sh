@@ -218,6 +218,9 @@ systemctl --user enable ydotool
 # Create Script Links in /usr/bin
 exec $HYPRLAND_CONFIG/scripts/update-script-links
 
+# Create link in HOME for hyprland folder
+ln -s $HYPRLAND_CONFIG $HOME/.hypr
+
 # Add user to group gamenice, to be able to nice the gamescope process
 sudo groupadd gamenice
 sudo usermod -aG gamenice $USER
