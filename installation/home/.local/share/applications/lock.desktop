@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+NoDisplay=false
+Terminal=false
+Exec=lock
+Icon=system-lock
+Name=Lock
+Comment=Locks the system with Swaylock
+Categories=System;

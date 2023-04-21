@@ -1,0 +1,4 @@
+#!/bin/bash
+
+grimshot save area - | swappy -f -
+

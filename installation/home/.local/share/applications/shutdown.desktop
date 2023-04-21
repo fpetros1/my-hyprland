@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+NoDisplay=false
+Terminal=false
+Exec=systemctl poweroff -i
+Icon=shutdown
+Name=Shutdown
+Comment=Shut the system down
+Categories=System;

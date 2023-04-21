@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#$LF="lf -selection-path /dev/stdout"
+
+#CMD=$([[ $TERMINAL == "alacritty" ]] && echo "-e $LF" || echo "$LF")
+
+exec kitty --class "lf-file-picker" lf -selection-path /dev/stdout
+
+#exec $TERMINAL --class "lf-file-picker" $CMD
+

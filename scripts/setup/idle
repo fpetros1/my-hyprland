@@ -1,9 +1,7 @@
 #!/bin/bash
 
-MONITOR_TIMEOUT=900
+MONITOR_TIMEOUT=600
 LOCK_COMMAND="swaylock -i $WALLPAPER"
 
 swayidle -w \
-	timeout "$MONITOR_TIMEOUT" "hyprctl dispatch dpms off" \
-	resume "hyprctl dispatch dpms on && sleep 0.3 && $LOCK_COMMAND"
-
+	timeout "$MONITOR_TIMEOUT" "$LOCK_COMMAND"

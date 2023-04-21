@@ -14,3 +14,4 @@
   "modules-left": ["wlr/workspaces", "hyprland/window"],
   "modules-right": ["cpu", "memory", "pulseaudio", "custom/device-battery", "clock", "gamemode", "tray", "custom/notifications"],
 }
+

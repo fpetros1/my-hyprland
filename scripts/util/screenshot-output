@@ -1,0 +1,6 @@
+#!/bin/bash
+
+FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+
+grim -o "$FOCUSED_MONITOR" -t png - | swappy -f -
+

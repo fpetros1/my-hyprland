@@ -23,7 +23,7 @@
          "3":"󰰡",
          "4":"󰯴",
          "5":"󱁐",
-		 "10":"",
+		 "10":"󰸼",
          "11":"󰰭",
          "12":"󰯫",
          "13":"󰰡",
@@ -51,8 +51,8 @@
       "format-alt":" {:%a %b %d, %G}"
    },
    "cpu":{
-      "interval":1,
-      "format":"{icon0}{icon1}{icon2}{icon3} {usage:>2}% ",
+      "interval":10,
+      "format":"{avg_frequency}GHz {usage:>2}% ",
       "format-icons":[
          "▁",
          "▂",

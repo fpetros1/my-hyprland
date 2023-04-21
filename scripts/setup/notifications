@@ -5,7 +5,7 @@ STYLE="$HOME/.config/hypr/swaync/style.css"
 
 CONFIG_FILES="$CONFIG $STYLE"
 
-trap "killall swaync" EXIT
+trap "killall swaync; exit" ERR EXIT
 
 while true; do
 	swaync -c ${CONFIG} -s ${STYLE} &

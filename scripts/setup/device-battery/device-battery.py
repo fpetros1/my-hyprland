@@ -20,3 +20,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
             break
         device_data += buf.decode("utf-8")
     print(device_data)
+

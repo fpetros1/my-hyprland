@@ -25,12 +25,8 @@ if [[ -n $SELECTED ]]; then
 
 	if [ "$ACTION" == "Run" ]; then
 		exec "$SCRIPT_REAL_PATH"
-		exit
 	fi
 	
-	CMD=$([[ $TERMINAL == "alacritty" ]] &&\
-		echo "-e $EDITOR $SCRIPT_REAL_PATH" || echo "$EDITOR $SCRIPT_REAL_PATH")
-	cd $(dirname $SCRIPT_REAL_PATH)
-	exec $CMD
+	exec "$EDITOR" "$SCRIPT_REAL_PATH"
 fi
 

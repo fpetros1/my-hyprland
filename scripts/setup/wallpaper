@@ -2,6 +2,6 @@
 
 swww init
 
-sww clear
+swww clear
 swww img "$WALLPAPER"
 

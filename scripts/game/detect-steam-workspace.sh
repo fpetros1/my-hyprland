@@ -1,1 +1,1 @@
-hyprctl clients -j | jq '.[] | select(.class == "Steam")' | jq '.workspace.id' | tail -n 1
+hyprctl clients -j | jq '.[] | select(.class == "Steam") | select(.title == "Steam")' | jq '.workspace.id' | tail -n 1
